@@ -26,7 +26,7 @@ $R@i.~~ !     :   ~$$$$$B$$en:``
 -----------------------------------------------
              WELCOME TO PROMETHEUS
 -----------------------------------------------
-                            write by: Kemquiros
+                          written by: Kemquiros
 -----------------------------------------------
 """
 
@@ -75,11 +75,13 @@ def decryptPrometheus(secret,text):
 			if pos2 < 0:
 				pos2 = len(key) - 1
 		return resul
+
 def printEncrypt(r):
 	print "-----------------------------------------------"
 	print "Encrypted Password:"
 	print r
 	print "-----------------------------------------------\n\n"
+
 def printDecrypt(r):
 	print "-----------------------------------------------"
 	print "Decrypted Password:"
