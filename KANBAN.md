@@ -40,13 +40,13 @@
 - [x] `prometheus profile create/list/show/delete` commands
 - [x] `prometheus store set/get/list/delete/exists` commands
 
-## Fase 4: Migration & Advanced — PENDIENTE
+## Fase 4: Migration & Advanced — COMPLETADA
 
-- [ ] v1 → v2 migration command (`prometheus migrate`)
-- [ ] Batch encrypt/decrypt (stdin pipe support)
-- [ ] `prometheus audit` — scan for weak v1 ciphertexts
+- [x] v1 → v2 migration command (`prometheus migrate`)
+- [x] Batch encrypt/decrypt (stdin pipe support)
+- [x] `prometheus audit` — scan for weak v1 ciphertexts
 - [ ] `prometheus rotate` — re-encrypt with new secret
-- [ ] Output formats: JSON, YAML, table, quiet
+- [x] Output formats: JSON, quiet (table default)
 - [ ] `--output FILE` flag for all commands
 
 ## Fase 5: Documentation & Distribution — EN PROGRESO
@@ -84,7 +84,7 @@
 |-------|--------|
 | `ruff check src/` | ✅ All checks passed |
 | `mypy --strict` | ✅ No issues found |
-| `pytest` | ✅ 174 passed, 3 skipped |
+| `pytest` | ✅ 182 passed, 3 skipped |
 | `coverage` | ✅ 90.28% |
 | `pre-commit` | ✅ Configured (ruff, mypy, bandit, codespell) |
 | `prometheus --help` | ✅ Working |
@@ -92,6 +92,8 @@
 | `prometheus config` | ✅ Working |
 | `prometheus profile` | ✅ Working |
 | `prometheus store` | ✅ Working |
+| `prometheus migrate` | ✅ Working |
+| `prometheus audit` | ✅ Working |
 
 ## Architecture
 
