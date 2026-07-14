@@ -1,129 +1,154 @@
-# PROMETHEUS
+# Prometheus
 
-## Password Encryption and Decryption Tool
+[![CI](https://github.com/Kemquiros/Prometheus/actions/workflows/ci.yml/badge.svg)](https://github.com/Kemquiros/Prometheus/actions)
+[![Python](https://img.shields.io/pypi/pyversions/prometheus-crypto)](https://pypi.org/project/prometheus-crypto/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE.md)
 
-### Key Sections:
-1. **Overview**: Briefly describes the project.
-2. **Features**: Lists the main features of the tool.
-3. **Requirements**: Specifies the prerequisites for running the tool.
-4. **Installation**: Guides the user through cloning the repository and installing dependencies.
-5. **Code Structure**: Provides an overview of the project's file structure.
-6. **Usage**: Explains how to use the tool, both in terminal and interactive modes, with example commands.
-7. **License and Contributing**: Information about contributing and the license.
-
-## Overview
-This project provides a simple command-line tool for encrypting and decrypting passwords using a symmetric encryption algorithm. The tool leverages a secret key to securely encrypt and decrypt passwords with XOR and modulus operations. It supports both terminal-based and interactive modes for ease of use.
-
-:shipit:
-![alt tag](https://raw.githubusercontent.com/Kemquiros/Prometheus/master/img/prometheus.png)
+World-class CLI for symmetric encryption of secrets. Legacy v1 compatible, modern v2 secure.
 
 ## Features
-- **Symmetric Encryption**: The same secret key is used for both encryption and decryption.
-- **Base64 Encoding**: Encrypted data is returned in Base64 format to make it safe for storage and transmission.
-- **Interactive Mode**: Encrypt or decrypt passwords directly from the command line with user prompts.
-- **Terminal Mode**: Execute encryption or decryption with command-line arguments.
-- **Password Security**: The secret key and passwords are never logged or printed in plaintext.
 
-## Requirements
-- Python 3.x
-- `cryptography` library (for encryption/decryption)
+- **Crypto v2 (recommended):** ChaCha20-Poly1305 + Argon2id — authenticated encryption with forward secrecy
+- **Crypto v1 (legacy):** XOR + SHA-256 + Base64 — backward compatible, NOT recommended for new encryption
+- **Auto-detect:** Automatically detects algorithm version from ciphertext format
+- **Interactive mode:** Guided prompts for encrypt/decrypt operations
+- **Multiple output formats:** Human-readable panels, JSON, quiet mode
 
-## Installation
-
-### Clone the Repository
+## Install
 
 ```bash
-git clone https://github.com/kemquirs/prometheus.git
-cd password-encryption-tool
+pip install prometheus-crypto
 ```
 
-## Code Structure
-* `main.py`: Main entry point of the program. Handles both terminal and interactive modes.
-* `cryptography.py`: Contains the encryption and decryption functions.
-* `messages.py`: Stores the messages shown to the user (e.g., error messages).
-* `wallpapers/`: Contains ASCII art displayed when the program starts.
-
-## Usage
-You can use the tool in either Terminal Mode or Interactive Mode.
-
-### 1. Terminal Mode
-
-In this mode, you provide the necessary arguments directly in the command line. You can encrypt or decrypt a password by passing the following arguments:
+Or with optional Argon2id support (recommended):
 
 ```bash
-python main.py -e <secret_key> <password>  # Encrypt a password
-python main.py -d <secret_key> <encrypted_password>  # Decrypt a password
+pip install "prometheus-crypto[crypto]"
 ```
-**Example:**
+
+## Quick Start
+
+### Encrypt
+
 ```bash
-python main.py -e "123" "my_password"  # Encrypt
-```
-The output will be a Base64-encoded ciphertext.
+# Interactive mode
+prometheus encrypt --secret "my-secret-key" --plaintext "password123"
 
-To decrypt a password:
+# JSON output
+prometheus encrypt --secret "my-secret-key" --plaintext "password123" --format json
+
+# Quiet output (just the ciphertext)
+prometheus encrypt --secret "my-secret-key" --plaintext "password123" --format quiet
+
+# Force v1 legacy algorithm
+prometheus encrypt --secret "my-secret-key" --plaintext "password123" --algo v1
+```
+
+### Decrypt
+
 ```bash
-python main.py -d "123" "Base64-encoded-ciphertext"
-```
-### 2. Interactive Mode
+# Auto-detect version from ciphertext
+prometheus decrypt --secret "my-secret-key" --ciphertext "v2|salt|nonce|ct|tag"
 
-In Interactive Mode, you can run the program without command-line arguments. The program will prompt you for inputs interactively.
+# JSON output
+prometheus decrypt --secret "my-secret-key" --ciphertext "v2|salt|nonce|ct|tag" --format json
+```
+
+### Interactive Mode
+
 ```bash
-python main.py
+prometheus interactive
 ```
 
-You will be asked to:
-
-* Choose an operation: Encrypt, Decrypt, or Finish the program.
-* Enter the secret key and password to encrypt or decrypt.
-
-**Example:**
-```text
-(e) Encrypt
-(d) Decrypt
-(f) Finish program
+```
+Choose operation:
+  (e) Encrypt
+  (d) Decrypt
+  (v) Show version
+  (f) Finish
 >> e
-Secret:
->> 123
-Password:
->> my_password
-Encrypted result: XYZ123==
+Secret: my-secret-key
+Password: password123
+┌─────────────── Encrypted ───────────────┐
+│ v2|...                                  │
+└──────────────── algorithm: v2 ──────────┘
 ```
-### 3. Error Handling
 
-If an error occurs (e.g., invalid input, encryption failure), the program will print an error message and allow you to try again.
-
-## Example Workflow
-
-### Encryption Example:
+### Version & Info
 
 ```bash
-python main.py -e "secret_key" "my_password"
+prometheus version    # Algorithm info
+prometheus info       # Full architecture details
 ```
 
-Output (Base64-encoded):
+## Architecture
+
+```
+src/prometheus/
+├── domain/          # Core business logic (no dependencies)
+│   ├── entities.py  # Profile, GlobalConfig
+│   ├── value_objects.py  # SecretKey, Plaintext, Ciphertext
+│   ├── ports.py     # CryptoPort, ConfigPort, StoragePort, OutputPort
+│   └── events.py    # Domain events
+├── cipher/          # Crypto adapters
+│   ├── v1_legacy/   # XOR + SHA-256 + Base64 (INMUTABLE)
+│   ├── v2_modern/   # ChaCha20-Poly1305 + Argon2id
+│   └── factory.py   # Auto-detect version, adapter selection
+├── cli/             # Typer + Rich CLI
+│   └── app.py       # encrypt, decrypt, interactive, version, info
+└── adapters/        # Future: storage, config, keyring adapters
+```
+
+Hexagonal architecture (Ports & Adapters):
+- **Domain** is pure business logic with zero I/O dependencies
+- **Ports** define interfaces (CryptoPort, ConfigPort, StoragePort, OutputPort)
+- **Adapters** implement those interfaces for concrete technologies
+
+## Security
+
+### v2 (Recommended)
+
+- **Key derivation:** Argon2id (OWASP 2024: 3 iterations, 64MB memory, 4 parallelism)
+- **Fallback:** PBKDF2-SHA256 (600k iterations) if argon2-cffi is not installed
+- **Encryption:** ChaCha20-Poly1305 AEAD (12-byte nonce, 16-byte tag)
+- **Forward secrecy:** Random salt + nonce per encryption
+- **Format:** `v2|salt_b64|nonce_b64|ciphertext_b64|tag_b64`
+
+### v1 (Legacy)
+
+- **NOT cryptographically secure**
+- XOR + SHA-256 + Base64/latin1 encoding
+- Retained solely for backward compatibility with existing v1 ciphertexts
+- **Do not use for new encryption** — use v2 instead
+
+## Development
+
+### Setup
+
 ```bash
-Encrypted result: XYZ123==
+git clone https://github.com/Kemquiros/Prometheus.git
+cd Prometheus
+python -m venv .venv
+source .venv/bin/activate
+pip install -e ".[crypto,dev]"
 ```
 
-### Decryption Example:
+### Quality
 
 ```bash
-python main.py -d "secret_key" "XYZ123=="
+ruff check src/ tests/         # Lint
+mypy src/prometheus/ --strict  # Type check
+pytest tests/ -v               # Tests
 ```
 
-Output:
+### Test Coverage
+
 ```bash
-Decrypted password: my_password
+pytest tests/ --cov=prometheus --cov-report=term-missing
 ```
+
+Coverage threshold: 90% (enforced in CI).
 
 ## License
 
-This project is licensed under the GNU License - see the LICENSE file for details.
-
-## Contributing
-We welcome contributions to improve the tool! To contribute:
-1. Fork the repository.
-1. Create a new branch (`git checkout -b feature/your-feature`).
-1. Make your changes and commit them (`git commit -am 'Add new feature'`).
-1. Push to your forked repository (`git push origin feature/your-feature`).
-1. Submit a pull request.
+MIT — see [LICENSE.md](LICENSE.md)

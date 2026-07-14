@@ -6,7 +6,8 @@ from __future__ import annotations
 from typing import Any
 
 import pytest
-from hypothesis import given, settings, HealthCheck, strategies as st
+from hypothesis import HealthCheck, given, settings
+from hypothesis import strategies as st
 
 from prometheus.domain.value_objects import Ciphertext
 
@@ -99,6 +100,5 @@ def adapter(request: pytest.FixtureRequest) -> Any:
     if request.param == "v1":
         from prometheus.cipher.v1_legacy.adapter import V1LegacyAdapter
         return V1LegacyAdapter()
-    else:
-        from prometheus.cipher.v2_modern.adapter import V2ModernAdapter
-        return V2ModernAdapter()
+    from prometheus.cipher.v2_modern.adapter import V2ModernAdapter
+    return V2ModernAdapter()

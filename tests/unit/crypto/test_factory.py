@@ -3,9 +3,12 @@
 
 from __future__ import annotations
 
-import pytest
-
-from prometheus.cipher.factory import CryptoFactory, detect_version, get_crypto, get_crypto_for_ciphertext
+from prometheus.cipher.factory import (
+    CryptoFactory,
+    detect_version,
+    get_crypto,
+    get_crypto_for_ciphertext,
+)
 from prometheus.cipher.v1_legacy.adapter import V1LegacyAdapter
 from prometheus.cipher.v2_modern.adapter import V2ModernAdapter
 from prometheus.domain.value_objects import Ciphertext

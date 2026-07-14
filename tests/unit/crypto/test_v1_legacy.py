@@ -52,7 +52,7 @@ class TestV1LegacyKnownAnswer:
         assert result.value == vector["ciphertext"]
 
     def test_symmetry(self) -> None:
-        """encrypt then decrypt must return original plaintext."""
+        """Encrypt then decrypt must return original plaintext."""
         secret = "symmetry-test-key"
         plaintext = "symmetry-test-password"
         ciphertext = self.adapter.encrypt(secret, plaintext)
