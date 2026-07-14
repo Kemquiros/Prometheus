@@ -1,4 +1,4 @@
-include wallpapers/*.txt
-include wallpapers/__init__.py
+include prometheus/wallpapers/skull.txt
+include prometheus/wallpapers/__init__.py
 include README.md
 include LICENSE.md

@@ -2,9 +2,9 @@
 import sys
 import getpass
 import importlib.resources as pkg_resources
-import messages
-from crypto import encrypt, decrypt
-from messages import print_encrypt, print_decrypt
+from . import messages
+from .crypto import encrypt, decrypt
+from .messages import print_encrypt, print_decrypt
 
 def read_wallpaper() -> str:
     """
@@ -14,7 +14,7 @@ def read_wallpaper() -> str:
         str: File content or an error message if the file cannot be read.
     """
     try:
-        return pkg_resources.read_text("wallpapers", "skull.txt")
+        return pkg_resources.read_text("prometheus.wallpapers", "skull.txt")
     except FileNotFoundError:
         return "Error: Wallpaper file not found."
     except Exception as e:

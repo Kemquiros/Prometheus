@@ -12,7 +12,7 @@ requires-python = ">=3.8"
 dependencies = []
 
 [project.scripts]
-prometheus = "main:main"
+prometheus = "prometheus.main:main"
 
 [project.urls]
 Homepage = "https://github.com/Kemquiros/Prometheus"
@@ -24,4 +24,4 @@ include-package-data = true
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["*"]
+include = ["prometheus*", "wallpapers*"]
