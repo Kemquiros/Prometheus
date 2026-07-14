@@ -12,6 +12,8 @@ from rich.panel import Panel
 from rich.table import Table
 
 from prometheus.cipher.factory import CryptoFactory
+from prometheus.cli.commands.config import config_app, profile_app
+from prometheus.cli.commands.storage import storage_app
 from prometheus.domain.value_objects import Ciphertext
 
 app = typer.Typer(
@@ -21,6 +23,10 @@ app = typer.Typer(
     add_completion=True,
     rich_markup_mode="rich",
 )
+
+app.add_typer(config_app)
+app.add_typer(profile_app)
+app.add_typer(storage_app)
 
 console = Console()
 
