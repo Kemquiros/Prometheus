@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "prometheus-crypto"
-version = "2.0.0.dev0"
+version = "2.0.0"
 description = "World-class CLI for symmetric encryption of secrets - legacy v1 compatible, modern v2 secure"
 readme = "README.md"
 license = {text = "MIT"}
