@@ -1,0 +1,18 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "python",
+      "package-name": "prometheus-crypto",
+      "changelog-path": "CHANGELOG.md",
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true,
+      "draft": false,
+      "prerelease": false
+    }
+  },
+  "plugins": [
+    {
+      "type": "sentence-case"
+    }
+  ]
+}
