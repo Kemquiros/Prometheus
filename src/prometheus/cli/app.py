@@ -13,6 +13,7 @@ from rich.table import Table
 
 from prometheus.cipher.factory import CryptoFactory
 from prometheus.cli.commands.config import config_app, profile_app
+from prometheus.cli.commands.migrate import migration_app
 from prometheus.cli.commands.storage import storage_app
 from prometheus.domain.value_objects import Ciphertext
 
@@ -27,6 +28,7 @@ app = typer.Typer(
 app.add_typer(config_app)
 app.add_typer(profile_app)
 app.add_typer(storage_app)
+app.add_typer(migration_app)
 
 console = Console()
 
