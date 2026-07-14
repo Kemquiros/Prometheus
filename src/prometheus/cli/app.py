@@ -87,7 +87,7 @@ def print_version() -> None:
 @app.command()
 def encrypt(
     secret: SecretOption,
-    plaintext: PlaintextOption,
+    plaintext: str = typer.Option("", "--plaintext", "-p", help="Plaintext (or pipe via stdin)"),
     version: VersionOption = "auto",
     output_format: FormatOption = "auto",
 ) -> None:
@@ -95,82 +95,104 @@ def encrypt(
 
     Examples:
         prometheus encrypt -s "my-secret" -p "password123"
-
-        prometheus encrypt --secret "prod-key" --plaintext "db-pass" --version v2
+        echo "password123" | prometheus encrypt -s "my-secret"
 
     """
+    if not plaintext and not typer.get_text_stream("stdin").isatty():
+        plaintext = typer.get_text_stream("stdin").read().strip()
+
+    if not plaintext:
+        console.print("[bold red]Error:[/] No plaintext. Use --plaintext or stdin.")
+        raise typer.Exit(1)
+
     factory = CryptoFactory(default_version=version)  # type: ignore[arg-type]
     try:
         ciphertext = factory.encrypt(secret, plaintext)
-        if output_format == "json":
-            console.print_json(
-                json.dumps(
-                    {
-                        "ciphertext": ciphertext.value,
-                        "version": ciphertext.version,
-                        "algorithm": ciphertext.version,
-                    },
-                ),
-            )
-        elif output_format == "quiet":
-            console.print(ciphertext.value)
-        else:
-            console.print()
-            console.print(
-                Panel(
-                    f"[bold green]{ciphertext.value}[/]",
-                    title="[bold purple]Encrypted[/]",
-                    subtitle=f"algorithm: {ciphertext.version}",
-                    border_style="purple",
-                ),
-            )
+        _print_encrypted(ciphertext, output_format)
     except Exception as e:
         console.print(f"[bold red]Error:[/] {e}", style="red")
         raise typer.Exit(1) from None
+
+
+def _print_encrypted(ciphertext: Ciphertext, output_format: str) -> None:
+    """Print encrypted result."""
+    if output_format == "json":
+        console.print_json(
+            json.dumps(
+                {
+                    "ciphertext": ciphertext.value,
+                    "version": ciphertext.version,
+                    "algorithm": ciphertext.version,
+                },
+            ),
+        )
+    elif output_format == "quiet":
+        console.print(ciphertext.value)
+    else:
+        console.print()
+        console.print(
+            Panel(
+                f"[bold green]{ciphertext.value}[/]",
+                title="[bold purple]Encrypted[/]",
+                subtitle=f"algorithm: {ciphertext.version}",
+                border_style="purple",
+            ),
+        )
 
 
 @app.command()
 def decrypt(
     secret: SecretOption,
-    ciphertext: CiphertextOption,
+    ciphertext: str = typer.Option("", "--ciphertext", "-c", help="Ciphertext (or pipe via stdin)"),
     output_format: FormatOption = "auto",
 ) -> None:
     """Decrypt ciphertext with a secret key.
 
     Examples:
-        prometheus decrypt -s "my-secret" -c "g/u55oK9j97hrpeX+w=="
-
-        prometheus decrypt --secret "prod-key" --ciphertext "v2|...|..."
+        prometheus decrypt -s "my-secret" -c "v2|...|..."
+        echo "v2|...|..." | prometheus decrypt -s "my-secret"
 
     """
+    if not ciphertext and not typer.get_text_stream("stdin").isatty():
+        ciphertext = typer.get_text_stream("stdin").read().strip()
+
+    if not ciphertext:
+        console.print("[bold red]Error:[/] No ciphertext. Use --ciphertext or stdin.")
+        raise typer.Exit(1)
+
     ct = Ciphertext(ciphertext)
     factory = CryptoFactory()
     try:
         plaintext = factory.decrypt(secret, ct)
-        if output_format == "json":
-            console.print_json(
-                json.dumps(
-                    {
-                        "plaintext": plaintext,
-                        "version": ct.version,
-                    },
-                ),
-            )
-        elif output_format == "quiet":
-            console.print(plaintext)
-        else:
-            console.print()
-            console.print(
-                Panel(
-                    f"[bold green]{plaintext}[/]",
-                    title="[bold purple]Decrypted[/]",
-                    subtitle=f"algorithm: {ct.version}",
-                    border_style="purple",
-                ),
-            )
+        _print_decrypted(plaintext, ct, output_format)
     except Exception as e:
         console.print(f"[bold red]Error:[/] {e}", style="red")
         raise typer.Exit(1) from None
+
+
+def _print_decrypted(plaintext: str, ct: Ciphertext, output_format: str) -> None:
+    """Print decrypted result."""
+    if output_format == "json":
+        console.print_json(
+            json.dumps(
+                {
+                    "plaintext": plaintext,
+                    "version": ct.version,
+                },
+            ),
+        )
+    elif output_format == "quiet":
+        console.print(plaintext)
+    else:
+        console.print()
+        console.print(
+            Panel(
+                f"[bold green]{plaintext}[/]",
+                title="[bold purple]Decrypted[/]",
+                subtitle=f"algorithm: {ct.version}",
+                border_style="purple",
+            ),
+        )
 
 
 @app.command()
