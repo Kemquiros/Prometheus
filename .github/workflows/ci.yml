@@ -35,6 +35,14 @@ jobs:
         run: |
           mypy src/prometheus/ --strict
 
+      - name: Security scan with bandit
+        run: |
+          bandit -r src/prometheus/ -c pyproject.toml
+
+      - name: Audit dependencies
+        run: |
+          pip-audit
+
       - name: Run tests
         run: |
           pytest tests/ -v --tb=short
