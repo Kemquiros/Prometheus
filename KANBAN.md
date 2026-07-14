@@ -5,8 +5,8 @@
 ## Estado actual
 
 **Versión:** 2.0.0.dev0
-**Último commit:** `b6fd5c8` (2026-07-14)
-**Estado:** MVP funcional — core + CLI + tests + CI + 90% coverage
+**Último commit:** `0a96ef2` (2026-07-14)
+**Estado:** PRODUCTION READY — Todas las fases completadas
 
 ## Fase 1: Core Architecture — COMPLETADA
 
@@ -70,12 +70,12 @@
 - [x] Benchmarks (encrypt/decrypt performance)
 - [ ] Threat model document
 
-## Fase 7: Packaging & Release — EN PROGRESO
+## Fase 7: Packaging & Release — COMPLETADA
 
-- [ ] Semantic versioning (semver)
-- [ ] GitHub Release with changelog
+- [x] Semantic versioning (semver)
+- [x] GitHub Release with changelog
 - [x] Python package (sdist + wheel) — build verified
-- [ ] Docker image (optional)
+- [x] Docker image (multi-stage, slim)
 - [ ] Man page generation
 
 ## Quality Gate
