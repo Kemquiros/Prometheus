@@ -1,0 +1,4 @@
+include wallpapers/*.txt
+include wallpapers/__init__.py
+include README.md
+include LICENSE.md

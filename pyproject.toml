@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prometheus-crypto"
+version = "0.1.0"
+description = "Password Encryption and Decryption Tool"
+readme = "README.md"
+license = {file = "LICENSE.md"}
+requires-python = ">=3.8"
+dependencies = []
+
+[project.scripts]
+prometheus = "main:main"
+
+[project.urls]
+Homepage = "https://github.com/Kemquiros/Prometheus"
+Repository = "https://github.com/Kemquiros/Prometheus"
+Issues = "https://github.com/Kemquiros/Prometheus/issues"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["*"]
