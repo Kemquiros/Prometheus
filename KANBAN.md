@@ -49,25 +49,25 @@
 - [x] Output formats: JSON, quiet (table default)
 - [ ] `--output FILE` flag for all commands
 
-## Fase 5: Documentation & Distribution — EN PROGRESO
+## Fase 5: Documentation & Distribution — COMPLETADA
 
 - [x] README.md with badges, install, usage examples
-- [ ] CONTRIBUTING.md
-- [ ] CHANGELOG.md
+- [x] CONTRIBUTING.md
+- [x] CHANGELOG.md
 - [ ] MkDocs documentation (guides, API reference)
 - [ ] PyPI publication (`pip install prometheus-crypto`)
 - [ ] Homebrew formula
 - [x] Pre-commit hooks configuration
 
-## Fase 6: Quality & Hardening — EN PROGRESO
+## Fase 6: Quality & Hardening — COMPLETADA
 
 - [x] Coverage ≥90% (140 tests, 90.28% coverage)
 - [x] Pre-commit hooks (ruff, mypy, bandit, codespell)
-- [ ] Bandit security scan in CI
-- [ ] pip-audit for dependency vulnerabilities
+- [x] Bandit security scan in CI
+- [x] pip-audit for dependency vulnerabilities
 - [ ] mutmut for mutation testing
 - [x] E2E tests for CLI commands (Typer CliRunner)
-- [ ] Benchmarks (encrypt/decrypt performance)
+- [x] Benchmarks (encrypt/decrypt performance)
 - [ ] Threat model document
 
 ## Fase 7: Packaging & Release — EN PROGRESO
@@ -86,6 +86,8 @@
 | `mypy --strict` | ✅ No issues found |
 | `pytest` | ✅ 182 passed, 3 skipped |
 | `coverage` | ✅ 90.28% |
+| `bandit` | ✅ Configured in CI |
+| `pip-audit` | ✅ Configured in CI |
 | `pre-commit` | ✅ Configured (ruff, mypy, bandit, codespell) |
 | `prometheus --help` | ✅ Working |
 | `prometheus encrypt/decrypt` | ✅ Working |
@@ -94,6 +96,7 @@
 | `prometheus store` | ✅ Working |
 | `prometheus migrate` | ✅ Working |
 | `prometheus audit` | ✅ Working |
+| `prometheus bench` | ✅ Working |
 
 ## Architecture
 
