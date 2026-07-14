@@ -1,0 +1,67 @@
+{
+  "algorithm": "v1_xor_sha256_base64_latin1",
+  "description": "KNOWN-ANSWER TESTS - v1 legacy algorithm. DO NOT MODIFY. See ADR 0002.",
+  "version": "1.0.0",
+  "vectors": [
+    {
+      "secret": "testkey",
+      "plaintext": "mipassword123",
+      "ciphertext": "g/u55oK9j97hrpeX+w==",
+      "notes": "Basic roundtrip"
+    },
+    {
+      "secret": "secret123",
+      "plaintext": "mipassword",
+      "ciphertext": "wqnD47rSvubc8w==",
+      "notes": "Different secret length"
+    },
+    {
+      "secret": "mysecret",
+      "plaintext": "pass",
+      "ciphertext": "0qTR4Q==",
+      "notes": "Short plaintext"
+    },
+    {
+      "secret": "123",
+      "plaintext": "my_password",
+      "ciphertext": "wZPyxafHws/FkqA=",
+      "notes": "Numeric secret"
+    },
+    {
+      "secret": "a",
+      "plaintext": "Hello World!",
+      "ciphertext": "yKL5rrSyirHq/qez",
+      "notes": "Single char secret"
+    },
+    {
+      "secret": "test@#$%",
+      "plaintext": "special chars: áéíóú ñ",
+      "ciphertext": "/PLqlLvm6fC66OXTgZrgMDggcw32UQ==",
+      "notes": "Unicode plaintext"
+    },
+    {
+      "secret": "key",
+      "plaintext": "abc",
+      "ciphertext": "6fT5",
+      "notes": "Minimal 3-char plaintext"
+    },
+    {
+      "secret": "long-secret-key-for-testing-12345",
+      "plaintext": "Hello World",
+      "ciphertext": "GKn8/5YviL7u1eI=",
+      "notes": "Long secret key"
+    },
+    {
+      "secret": "alpha-key-12345",
+      "plaintext": "password-one",
+      "ciphertext": "kaSWkcv9jqj7+a77",
+      "notes": "Alpha-key password-one"
+    },
+    {
+      "secret": "beta-key-12345",
+      "plaintext": "password-two",
+      "ciphertext": "xqLClZv5362vxbyA",
+      "notes": "Beta-key password-two"
+    }
+  ]
+}

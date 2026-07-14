@@ -1,0 +1,96 @@
+site_name: "Prometheus Crypto"
+site_url: "https://kemquiros.github.io/Prometheus/"
+repo_url: "https://github.com/Kemquiros/Prometheus"
+repo_name: "Kemquiros/Prometheus"
+edit_uri: "edit/main/docs/"
+copyright: "Copyright &copy; 2026 Kemquiros"
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: deep-purple
+      accent: purple
+    - scheme: slate
+      primary: deep-purple
+      accent: purple
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+  icon:
+    repo: fontawesome/brands/github
+nav:
+  - Inicio: index.md
+  - Tutorial:
+      - Instalacion: tutorial/01-install.md
+      - Primer Cifrado: tutorial/02-first-encrypt.md
+      - Modo Interactivo: tutorial/03-interactive.md
+      - Perfiles y Config: tutorial/04-profiles.md
+      - Migracion v1-v2: tutorial/05-migration.md
+      - Uso Avanzado: tutorial/06-advanced.md
+  - Referencia:
+      - CLI: reference/cli.md
+      - Configuracion: reference/config.md
+      - API Python: reference/api.md
+  - Arquitectura:
+      - Hexagonal: architecture/hexagonal.md
+      - Crypto Design: architecture/crypto-design.md
+  - ADRs:
+      - 0001 Hexagonal: adr/0001-hexagonal-architecture.md
+      - 0002 v1 Legacy: adr/0002-crypto-v1-legacy-immutable.md
+      - 0003 v2 Modern: adr/0003-crypto-v2-modern.md
+      - 0004 Storage: adr/0004-storage-backend-abstraction.md
+  - Contribuir: contributing.md
+  - Changelog: changelog.md
+  - Seguridad: security.md
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: ["src/prometheus"]
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_root_toc_entry: false
+  - mkdocs-git-revision-date-localized-plugin:
+      type: date
+      timezone: UTC
+      locale: en
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+      linenums: true
+  - footnotes
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
