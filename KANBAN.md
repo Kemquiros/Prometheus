@@ -30,14 +30,15 @@
 - [x] `prometheus version` and `prometheus info`
 - [x] Banner + panels with Rich formatting
 
-## Fase 3: Storage & Config — EN PROGRESO
+## Fase 3: Storage & Config — COMPLETADA
 
 - [x] ConfigPort implementation (TOML config file)
 - [x] StoragePort: file-based secret storage
 - [ ] KeyringPort: OS keyring integration (macOS Keychain, Linux SecretService, Windows Credential Locker)
 - [x] Profile management (multiple encryption profiles)
-- [ ] `prometheus config init/show/set/get` commands
-- [ ] `prometheus profile create/list/use/delete` commands
+- [x] `prometheus config show/init` commands
+- [x] `prometheus profile create/list/show/delete` commands
+- [x] `prometheus store set/get/list/delete/exists` commands
 
 ## Fase 4: Migration & Advanced — PENDIENTE
 
@@ -83,11 +84,14 @@
 |-------|--------|
 | `ruff check src/` | ✅ All checks passed |
 | `mypy --strict` | ✅ No issues found |
-| `pytest` | ✅ 140 passed, 3 skipped |
+| `pytest` | ✅ 174 passed, 3 skipped |
 | `coverage` | ✅ 90.28% |
 | `pre-commit` | ✅ Configured (ruff, mypy, bandit, codespell) |
 | `prometheus --help` | ✅ Working |
 | `prometheus encrypt/decrypt` | ✅ Working |
+| `prometheus config` | ✅ Working |
+| `prometheus profile` | ✅ Working |
+| `prometheus store` | ✅ Working |
 
 ## Architecture
 
