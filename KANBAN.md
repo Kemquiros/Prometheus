@@ -5,8 +5,8 @@
 ## Estado actual
 
 **Versión:** 2.0.0.dev0
-**Último commit:** `0b00364` (2026-07-14)
-**Estado:** MVP funcional — core + CLI + tests + CI
+**Último commit:** `b6fd5c8` (2026-07-14)
+**Estado:** MVP funcional — core + CLI + tests + CI + 90% coverage
 
 ## Fase 1: Core Architecture — COMPLETADA
 
@@ -30,12 +30,12 @@
 - [x] `prometheus version` and `prometheus info`
 - [x] Banner + panels with Rich formatting
 
-## Fase 3: Storage & Config — PENDIENTE
+## Fase 3: Storage & Config — EN PROGRESO
 
-- [ ] ConfigPort implementation (TOML/YAML config file)
-- [ ] StoragePort: file-based secret storage
+- [x] ConfigPort implementation (TOML config file)
+- [x] StoragePort: file-based secret storage
 - [ ] KeyringPort: OS keyring integration (macOS Keychain, Linux SecretService, Windows Credential Locker)
-- [ ] Profile management (multiple encryption profiles)
+- [x] Profile management (multiple encryption profiles)
 - [ ] `prometheus config init/show/set/get` commands
 - [ ] `prometheus profile create/list/use/delete` commands
 
@@ -48,32 +48,32 @@
 - [ ] Output formats: JSON, YAML, table, quiet
 - [ ] `--output FILE` flag for all commands
 
-## Fase 5: Documentation & Distribution — PENDIENTE
+## Fase 5: Documentation & Distribution — EN PROGRESO
 
-- [ ] README.md with badges, install, usage examples
+- [x] README.md with badges, install, usage examples
 - [ ] CONTRIBUTING.md
 - [ ] CHANGELOG.md
 - [ ] MkDocs documentation (guides, API reference)
 - [ ] PyPI publication (`pip install prometheus-crypto`)
 - [ ] Homebrew formula
-- [ ] Pre-commit hooks configuration
+- [x] Pre-commit hooks configuration
 
-## Fase 6: Quality & Hardening — PENDIENTE
+## Fase 6: Quality & Hardening — EN PROGRESO
 
-- [ ] Coverage ≥90% (currently ~56% — CLI and integration tests needed)
-- [ ] Pre-commit hooks (ruff, mypy, bandit)
+- [x] Coverage ≥90% (140 tests, 90.28% coverage)
+- [x] Pre-commit hooks (ruff, mypy, bandit, codespell)
 - [ ] Bandit security scan in CI
 - [ ] pip-audit for dependency vulnerabilities
 - [ ] mutmut for mutation testing
-- [ ] E2E tests for CLI commands
+- [x] E2E tests for CLI commands (Typer CliRunner)
 - [ ] Benchmarks (encrypt/decrypt performance)
 - [ ] Threat model document
 
-## Fase 7: Packaging & Release — PENDIENTE
+## Fase 7: Packaging & Release — EN PROGRESO
 
 - [ ] Semantic versioning (semver)
 - [ ] GitHub Release with changelog
-- [ ] Python package (sdist + wheel)
+- [x] Python package (sdist + wheel) — build verified
 - [ ] Docker image (optional)
 - [ ] Man page generation
 
@@ -83,7 +83,9 @@
 |-------|--------|
 | `ruff check src/` | ✅ All checks passed |
 | `mypy --strict` | ✅ No issues found |
-| `pytest` | ✅ 75 passed, 3 skipped |
+| `pytest` | ✅ 140 passed, 3 skipped |
+| `coverage` | ✅ 90.28% |
+| `pre-commit` | ✅ Configured (ruff, mypy, bandit, codespell) |
 | `prometheus --help` | ✅ Working |
 | `prometheus encrypt/decrypt` | ✅ Working |
 

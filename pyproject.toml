@@ -31,6 +31,7 @@ dependencies = [
     "pyyaml>=6.0",
     "platformdirs>=4.2",
     "typing_extensions>=4.6",
+    "tomli_w>=1.0",
 ]
 
 [project.optional-dependencies]
@@ -80,7 +81,7 @@ select = ["E", "F", "I", "UP", "W", "C4", "C9", "D", "DTZ", "EXE", "ISC", "ICN",
 ignore = ["D100", "D101", "D102", "D103", "D104", "D105", "D106", "D107", "S101", "ARG001", "ARG002"]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**/*.py" = ["S101", "S105", "S106", "S108", "S110", "D100", "D101", "D102", "D103", "D104", "D105", "D106", "D107", "D401", "B017", "PT011", "SIM105", "SIM115", "PLR2004", "PLC0415", "E501", "TC001", "PTH123"]
+"tests/**/*.py" = ["S101", "S105", "S106", "S108", "S110", "D100", "D101", "D102", "D103", "D104", "D105", "D106", "D107", "D401", "B017", "PT011", "SIM105", "SIM115", "PLR2004", "PLC0415", "E501", "TC001", "TC003", "PTH123"]
 "docs/**/*.py" = ["D100", "D101", "D102", "D103"]
 
 [tool.ruff.format]
@@ -106,6 +107,10 @@ packages = ["prometheus"]
 
 [[tool.mypy.overrides]]
 module = ["prometheus.*"]
+
+[[tool.mypy.overrides]]
+module = ["tomllib", "tomli_w"]
+ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
