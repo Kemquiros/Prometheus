@@ -4,9 +4,9 @@
 
 ## Estado actual
 
-**Versión:** 2.0.0.dev0
-**Último commit:** `0a96ef2` (2026-07-14)
-**Estado:** PRODUCTION READY — Todas las fases completadas
+**Versión:** 2.0.0
+**Último commit:** `8fde1ba` (2026-07-14)
+**Estado:** RELEASED — v2.0.0 tag pushed, release workflow running
 
 ## Fase 1: Core Architecture — COMPLETADA
 
