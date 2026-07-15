@@ -137,6 +137,51 @@ feat: add keyring adapter for macOS Keychain
 - [ ] Documentation updated (if applicable)
 - [ ] CHANGELOG.md updated (if applicable)
 
+## Release Publishing
+
+Prometheus publishes to:
+- **PyPI**: `prometheus-crypto` package
+- **GitHub Release**: `.whl` and `.tar.gz` artifacts
+- **GHCR**: Docker image `ghcr.io/kemquiros/prometheus`
+
+### PyPI Setup (Maintainers)
+
+PyPI publishing uses a token-based approach. Set up the `PYPI_TOKEN` secret:
+
+1. Generate an API token at https://pypi.org/manage/account/token/
+2. Go to https://github.com/Kemquiros/Prometheus/settings/secrets/actions
+3. Add a new repository secret named `PYPI_TOKEN`
+4. Paste the token value
+
+### Docker/GHCR Setup (Maintainers)
+
+Docker images are published to GitHub Container Registry (GHCR). This requires repository permissions:
+
+1. Go to https://github.com/Kemquiros/Prometheus/settings
+2. Navigate to **Actions → General**
+3. Under **Workflow permissions**, select **"Read and write permissions"**
+4. Save changes
+
+This allows the `GITHUB_TOKEN` to push images to `ghcr.io/kemquiros/prometheus`.
+
+### Publishing a Release
+
+Releases are triggered by pushing a version tag:
+
+```bash
+# Bump version in pyproject.toml
+# Update CHANGELOG.md
+# Commit and tag
+git tag v2.0.1
+git push origin v2.0.1
+```
+
+The CI/CD pipeline will:
+1. Build the package
+2. Create a GitHub Release with artifacts
+3. Publish to PyPI (if `PYPI_TOKEN` secret is configured)
+4. Publish Docker image to GHCR (if permissions are configured)
+
 ## Security
 
 - Never commit secrets or credentials
