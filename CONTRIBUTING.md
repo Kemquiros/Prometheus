@@ -155,14 +155,17 @@ PyPI publishing uses a token-based approach. Set up the `PYPI_TOKEN` secret:
 
 ### Docker/GHCR Setup (Maintainers)
 
-Docker images are published to GitHub Container Registry (GHCR). This requires repository permissions:
+Docker images are published to GitHub Container Registry (GHCR). This requires a Personal Access Token (PAT):
 
-1. Go to https://github.com/Kemquiros/Prometheus/settings
-2. Navigate to **Actions → General**
-3. Under **Workflow permissions**, select **"Read and write permissions"**
-4. Save changes
+1. Go to https://github.com/settings/tokens
+2. Click **Generate new token** (classic)
+3. Select scope: **`write:packages`**
+4. Copy the token
+5. Go to https://github.com/Kemquiros/Prometheus/settings/secrets/actions
+6. Add a new repository secret named `GHCR_PAT`
+7. Paste the token value
 
-This allows the `GITHUB_TOKEN` to push images to `ghcr.io/kemquiros/prometheus`.
+**Note:** The default `GITHUB_TOKEN` cannot publish to GHCR for personal accounts. A PAT with `write:packages` scope is required.
 
 ### Publishing a Release
 
