@@ -119,3 +119,25 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Docker publish status
+        if: always()
+        run: |
+          echo "## Docker Publish Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "✅ Docker image published to GHCR" >> $GITHUB_STEP_SUMMARY
+            echo "Image: \`ghcr.io/${{ github.repository }}\`" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ Docker publish failed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Common causes:**" >> $GITHUB_STEP_SUMMARY
+            echo "1. Repository permissions not configured" >> $GITHUB_STEP_SUMMARY
+            echo "2. GITHUB_TOKEN lacks \`packages:write\` scope" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Fix:**" >> $GITHUB_STEP_SUMMARY
+            echo "1. Go to https://github.com/${{ github.repository }}/settings" >> $GITHUB_STEP_SUMMARY
+            echo "2. Navigate to Actions → General" >> $GITHUB_STEP_SUMMARY
+            echo "3. Under \"Workflow permissions\", select \"Read and write permissions\"" >> $GITHUB_STEP_SUMMARY
+            echo "4. Save changes" >> $GITHUB_STEP_SUMMARY
+          fi
